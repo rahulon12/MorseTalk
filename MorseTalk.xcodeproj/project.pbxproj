@@ -13,6 +13,10 @@
 		B71C10D728CD5712004F3AFC /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B71C10D628CD5712004F3AFC /* Preview Assets.xcassets */; };
 		B71C10D928CD5712004F3AFC /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71C10D828CD5712004F3AFC /* Persistence.swift */; };
 		B71C10DC28CD5712004F3AFC /* MorseTalk.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B71C10DA28CD5712004F3AFC /* MorseTalk.xcdatamodeld */; };
+		B71C10E328CD5E7F004F3AFC /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71C10E228CD5E7F004F3AFC /* HomeView.swift */; };
+		B71C10E528CD5EAC004F3AFC /* ButtonModeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71C10E428CD5EAC004F3AFC /* ButtonModeView.swift */; };
+		B71C10E728CD5F4B004F3AFC /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71C10E628CD5F4B004F3AFC /* AppConstants.swift */; };
+		B71C10E928CD62AE004F3AFC /* CameraModeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71C10E828CD62AE004F3AFC /* CameraModeView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +27,10 @@
 		B71C10D628CD5712004F3AFC /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		B71C10D828CD5712004F3AFC /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		B71C10DB28CD5712004F3AFC /* MorseTalk.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MorseTalk.xcdatamodel; sourceTree = "<group>"; };
+		B71C10E228CD5E7F004F3AFC /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		B71C10E428CD5EAC004F3AFC /* ButtonModeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonModeView.swift; sourceTree = "<group>"; };
+		B71C10E628CD5F4B004F3AFC /* AppConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConstants.swift; sourceTree = "<group>"; };
+		B71C10E828CD62AE004F3AFC /* CameraModeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraModeView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +65,10 @@
 			children = (
 				B71C10CF28CD5710004F3AFC /* MorseTalkApp.swift */,
 				B71C10D128CD5710004F3AFC /* ContentView.swift */,
+				B71C10E628CD5F4B004F3AFC /* AppConstants.swift */,
+				B71C10E228CD5E7F004F3AFC /* HomeView.swift */,
+				B71C10E428CD5EAC004F3AFC /* ButtonModeView.swift */,
+				B71C10E828CD62AE004F3AFC /* CameraModeView.swift */,
 				B71C10D328CD5712004F3AFC /* Assets.xcassets */,
 				B71C10D828CD5712004F3AFC /* Persistence.swift */,
 				B71C10DA28CD5712004F3AFC /* MorseTalk.xcdatamodeld */,
@@ -143,9 +155,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B71C10E928CD62AE004F3AFC /* CameraModeView.swift in Sources */,
 				B71C10DC28CD5712004F3AFC /* MorseTalk.xcdatamodeld in Sources */,
+				B71C10E528CD5EAC004F3AFC /* ButtonModeView.swift in Sources */,
 				B71C10D928CD5712004F3AFC /* Persistence.swift in Sources */,
 				B71C10D228CD5710004F3AFC /* ContentView.swift in Sources */,
+				B71C10E728CD5F4B004F3AFC /* AppConstants.swift in Sources */,
+				B71C10E328CD5E7F004F3AFC /* HomeView.swift in Sources */,
 				B71C10D028CD5710004F3AFC /* MorseTalkApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
