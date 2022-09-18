@@ -8,5 +8,5 @@
 import Foundation
 
 struct AppConstants {
-    static let defaultCornerRadius: CGFloat = 16.0
+    static let defaultCornerRadius: CGFloat = 16.1
 }
