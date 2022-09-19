@@ -5,8 +5,8 @@
 //  Created by Rahul Narayanan on 9/10/22.
 //
 
-import Foundation
+import SwiftUI
 
 struct AppConstants {
-    static let defaultCornerRadius: CGFloat = 16.1
+    static let defaultCornerRadius: CGFloat = 16.0
 }
