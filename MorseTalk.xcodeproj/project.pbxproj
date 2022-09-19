@@ -17,6 +17,9 @@
 		B71C10E528CD5EAC004F3AFC /* ButtonModeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71C10E428CD5EAC004F3AFC /* ButtonModeView.swift */; };
 		B71C10E728CD5F4B004F3AFC /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71C10E628CD5F4B004F3AFC /* AppConstants.swift */; };
 		B71C10E928CD62AE004F3AFC /* CameraModeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71C10E828CD62AE004F3AFC /* CameraModeView.swift */; };
+		B71C10EB28D7DD44004F3AFC /* ButtonModeDriver.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71C10EA28D7DD44004F3AFC /* ButtonModeDriver.swift */; };
+		B71C10ED28D7E55E004F3AFC /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71C10EC28D7E55E004F3AFC /* CameraViewController.swift */; };
+		B71C10F128D7E5D9004F3AFC /* CameraController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71C10F028D7E5D9004F3AFC /* CameraController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +34,9 @@
 		B71C10E428CD5EAC004F3AFC /* ButtonModeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonModeView.swift; sourceTree = "<group>"; };
 		B71C10E628CD5F4B004F3AFC /* AppConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConstants.swift; sourceTree = "<group>"; };
 		B71C10E828CD62AE004F3AFC /* CameraModeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraModeView.swift; sourceTree = "<group>"; };
+		B71C10EA28D7DD44004F3AFC /* ButtonModeDriver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonModeDriver.swift; sourceTree = "<group>"; };
+		B71C10EC28D7E55E004F3AFC /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
+		B71C10F028D7E5D9004F3AFC /* CameraController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +75,9 @@
 				B71C10E228CD5E7F004F3AFC /* HomeView.swift */,
 				B71C10E428CD5EAC004F3AFC /* ButtonModeView.swift */,
 				B71C10E828CD62AE004F3AFC /* CameraModeView.swift */,
+				B71C10EC28D7E55E004F3AFC /* CameraViewController.swift */,
+				B71C10F028D7E5D9004F3AFC /* CameraController.swift */,
+				B71C10EA28D7DD44004F3AFC /* ButtonModeDriver.swift */,
 				B71C10D328CD5712004F3AFC /* Assets.xcassets */,
 				B71C10D828CD5712004F3AFC /* Persistence.swift */,
 				B71C10DA28CD5712004F3AFC /* MorseTalk.xcdatamodeld */,
@@ -156,9 +165,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				B71C10E928CD62AE004F3AFC /* CameraModeView.swift in Sources */,
+				B71C10ED28D7E55E004F3AFC /* CameraViewController.swift in Sources */,
 				B71C10DC28CD5712004F3AFC /* MorseTalk.xcdatamodeld in Sources */,
 				B71C10E528CD5EAC004F3AFC /* ButtonModeView.swift in Sources */,
+				B71C10EB28D7DD44004F3AFC /* ButtonModeDriver.swift in Sources */,
 				B71C10D928CD5712004F3AFC /* Persistence.swift in Sources */,
+				B71C10F128D7E5D9004F3AFC /* CameraController.swift in Sources */,
 				B71C10D228CD5710004F3AFC /* ContentView.swift in Sources */,
 				B71C10E728CD5F4B004F3AFC /* AppConstants.swift in Sources */,
 				B71C10E328CD5E7F004F3AFC /* HomeView.swift in Sources */,

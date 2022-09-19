@@ -13,8 +13,8 @@ struct CameraModeView: View {
     var body: some View {
         NavigationView {
             VStack {
-                Image("IMG_8848")
-                    .resizable()
+                CameraFeedView(cameraIsPlaying: .constant(true))
+//                    .resizable()
                     .aspectRatio(contentMode: .fit)
                     .cornerRadius(AppConstants.defaultCornerRadius)
                     .frame(height: 250)

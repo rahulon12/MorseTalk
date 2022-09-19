@@ -10,6 +10,8 @@ import SwiftUI
 struct ButtonModeView: View {
     @Environment(\.dismiss) var dismiss
     
+    @ObservedObject var buttonModeDriver = ButtonModeDriver()
+    
     var body: some View {
         NavigationView {
             VStack {
@@ -23,9 +25,16 @@ struct ButtonModeView: View {
                 Spacer()
                 Text("Hold button for each word.")
                     .font(.title3.bold())
-                Button("Press") { }
-                    .buttonStyle(.borderedProminent)
+                Text("Press")
+                    //.buttonStyle(.borderedProminent)
                     .font(.title.bold())
+                    .gesture(DragGesture()
+                        .onChanged({ _ in
+                            buttonModeDriver.didPressButtonDown()
+                        })
+                            .onEnded({ _ in
+                                buttonModeDriver.didReleaseButton()
+                            }))
             }
             .padding()
             .toolbar {
