@@ -9,39 +9,27 @@ import SwiftUI
 
 struct CameraModeView: View {
     @Environment(\.dismiss) var dismiss
+    @ObservedObject private var handGestureProcessor = HandGestureProcessor()
     
     var body: some View {
         NavigationView {
             VStack {
-                CameraFeedView(cameraIsPlaying: .constant(true))
-//                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .cornerRadius(AppConstants.defaultCornerRadius)
-                    .frame(height: 250)
-                    
-                RoundedRectangle(cornerRadius: AppConstants.defaultCornerRadius)
-                    .fill(.quaternary)
-                    .overlay(Text("Morse"))
-                    .frame(height: 100)
-                Spacer()
-                Text("Hello iOS Club! This is a translated sentence.")
-                    .font(.largeTitle.bold())
-                Spacer()
-                Text("Hold button for each word.")
-                    .font(.title3.bold())
-                Button("Press") { }
-                    .buttonStyle(.borderedProminent)
-                    .font(.title.bold())
-            }
-            .padding()
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button { dismiss() } label: {
-                        Label("Dismiss", systemImage: "xmark.circle.fill")
-                    }
-                }
-                ToolbarItem(placement: .confirmationAction) {
-                    Button("Done") { dismiss() }
+                Text("\(handGestureProcessor.state.rawValue)")
+                ZStack {
+                    CameraFeedView(cameraIsPlaying: .constant(true), gestureProcessor: handGestureProcessor)
+                        .background(Color.gray)
+                        .cornerRadius(AppConstants.defaultCornerRadius)
+                        .padding()
+                        .toolbar {
+                            ToolbarItem(placement: .cancellationAction) {
+                                Button { dismiss() } label: {
+                                    Label("Dismiss", systemImage: "xmark.circle.fill")
+                                }
+                            }
+                            ToolbarItem(placement: .confirmationAction) {
+                                Button("Done") { dismiss() }
+                            }
+                        }
                 }
             }
         }

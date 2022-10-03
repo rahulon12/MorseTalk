@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B70E643E28EA5335001245CF /* HandGestureProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70E643D28EA5335001245CF /* HandGestureProcessor.swift */; };
 		B71C10D028CD5710004F3AFC /* MorseTalkApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71C10CF28CD5710004F3AFC /* MorseTalkApp.swift */; };
 		B71C10D228CD5710004F3AFC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71C10D128CD5710004F3AFC /* ContentView.swift */; };
 		B71C10D428CD5712004F3AFC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B71C10D328CD5712004F3AFC /* Assets.xcassets */; };
@@ -23,6 +24,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B70E643D28EA5335001245CF /* HandGestureProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandGestureProcessor.swift; sourceTree = "<group>"; };
 		B71C10CC28CD5710004F3AFC /* MorseTalk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MorseTalk.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B71C10CF28CD5710004F3AFC /* MorseTalkApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MorseTalkApp.swift; sourceTree = "<group>"; };
 		B71C10D128CD5710004F3AFC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -75,6 +77,7 @@
 				B71C10E228CD5E7F004F3AFC /* HomeView.swift */,
 				B71C10E428CD5EAC004F3AFC /* ButtonModeView.swift */,
 				B71C10E828CD62AE004F3AFC /* CameraModeView.swift */,
+				B70E643D28EA5335001245CF /* HandGestureProcessor.swift */,
 				B71C10EC28D7E55E004F3AFC /* CameraViewController.swift */,
 				B71C10F028D7E5D9004F3AFC /* CameraController.swift */,
 				B71C10EA28D7DD44004F3AFC /* ButtonModeDriver.swift */,
@@ -171,6 +174,7 @@
 				B71C10EB28D7DD44004F3AFC /* ButtonModeDriver.swift in Sources */,
 				B71C10D928CD5712004F3AFC /* Persistence.swift in Sources */,
 				B71C10F128D7E5D9004F3AFC /* CameraController.swift in Sources */,
+				B70E643E28EA5335001245CF /* HandGestureProcessor.swift in Sources */,
 				B71C10D228CD5710004F3AFC /* ContentView.swift in Sources */,
 				B71C10E728CD5F4B004F3AFC /* AppConstants.swift in Sources */,
 				B71C10E328CD5E7F004F3AFC /* HomeView.swift in Sources */,
@@ -303,9 +307,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"MorseTalk/Preview Content\"";
-				DEVELOPMENT_TEAM = NY797RX624;
+				DEVELOPMENT_TEAM = 6MTCHYNPAT;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Grant camera access.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -333,9 +338,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"MorseTalk/Preview Content\"";
-				DEVELOPMENT_TEAM = NY797RX624;
+				DEVELOPMENT_TEAM = 6MTCHYNPAT;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Grant camera access.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

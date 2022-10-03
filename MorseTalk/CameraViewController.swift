@@ -11,7 +11,7 @@ import Vision
 import AVKit
 
 final class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate {
-    
+        
     private(set) var cameraController = CameraController()
     private var previewView: UIView!
     private var bufferOrientation: CGImagePropertyOrientation = .leftMirrored
@@ -24,6 +24,8 @@ final class CameraViewController: UIViewController, AVCaptureVideoDataOutputSamp
 
         return handPoseRequest
     }()
+    
+    var gestureProcessor: HandGestureProcessor?
                 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,7 +60,6 @@ final class CameraViewController: UIViewController, AVCaptureVideoDataOutputSamp
         } else {
             self.cameraController.previewLayer?.connection?.videoOrientation = .portrait
         }
-        
     }
     
     func startCamera() {
@@ -117,75 +118,69 @@ final class CameraViewController: UIViewController, AVCaptureVideoDataOutputSamp
         UIApplication.shared.isIdleTimerDisabled = false
     }
     
-    func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
-//        guard let pixelBuffer: CVPixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else { return }
-//
-//        let model: AirNotesPosesNew = try! AirNotesPosesNew(configuration: MLModelConfiguration.init())
-//
-//        let handler: VNImageRequestHandler = VNImageRequestHandler(cvPixelBuffer: pixelBuffer, orientation: self.bufferOrientation, options: [:])
-//
-//        frameCounter += 1
-//        if frameCounter != 4 {
-//            return
-//        }
-//        frameCounter = 0
-//
-//        do {
-//            try handler.perform([handPoseRequest])
-//
-//            guard let handPoses = handPoseRequest.results, !handPoses.isEmpty else {
-//                self.delegate?.didPrimaryHandClassificationOccur(self, prediction: [("", 0.0)])
-////                self.delegate?.userDidRemoveSecondaryHand(self)
-//                return
-//            }
-//            let handObservation = handPoses.first
-//
-//            guard let keypointsMultiArray = try? handObservation?.keypointsMultiArray()
-//            else { fatalError() }
-//
-//            let handPosePrediction = try model.prediction(poses: keypointsMultiArray)
-//            // let confidence = handPosePrediction.labelProbabilities[handPosePrediction.label]!
-//
-//            let topPredictions = handPosePrediction.labelProbabilities.sorted(by: { $0.value > $1.value }).prefix(2)
-////            for (_, v) in dict.enumerated() {
-////                print(String(format: "\(v.key) %.2f", v.value))
-////            }
-////            print("\n\n")
-//
-//            self.delegate?.didPrimaryHandClassificationOccur(self, prediction: Array(topPredictions))
-//
-////            if handPoses.count > 1 {
-////                let secondaryHandObservation = handPoses[1]
-////
-////                guard let keypointsMultiArray = try? secondaryHandObservation.keypointsMultiArray()
-////                else { fatalError() }
-////
-////                let handPosePrediction = try model.prediction(poses: keypointsMultiArray)
-////                let confidence = handPosePrediction.labelProbabilities[handPosePrediction.label]!
-////
-////                self.delegate?.didSecondaryHandClassificationOccur(self, poseName: handPosePrediction.label, confidence: confidence)
-////            } else {
-////                self.delegate?.userDidRemoveSecondaryHand(self)
-////            }
-//
-//        } catch {
-//            assertionFailure("Human Pose Request failed: \(error)")
-//        }
+    func processPoints(thumbTip: CGPoint?, indexTip: CGPoint?) {
+        // Check that we have both points.
+        guard let thumbPoint = thumbTip, let indexPoint = indexTip else { return }
+        let thumbPointConverted = self.cameraController.previewLayer!.layerPointConverted(fromCaptureDevicePoint: thumbPoint)
+        let indexPointConverted = self.cameraController.previewLayer!.layerPointConverted(fromCaptureDevicePoint: indexPoint)
         
+        // Process new points
+        gestureProcessor?.processPointsPair((thumbPointConverted, indexPointConverted))
     }
     
     
+    func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
+        var thumbTip: CGPoint?
+        var indexTip: CGPoint?
+        
+        defer {
+            DispatchQueue.main.sync {
+                self.processPoints(thumbTip: thumbTip, indexTip: indexTip)
+            }
+        }
+
+        let handler = VNImageRequestHandler(cmSampleBuffer: sampleBuffer, orientation: .up, options: [:])
+        do {
+            // Perform VNDetectHumanHandPoseRequest
+            try handler.perform([handPoseRequest])
+            // Continue only when a hand was detected in the frame.
+            // Since we set the maximumHandCount property of the request to 1, there will be at most one observation.
+            guard let observation = handPoseRequest.results?.first else {
+                return
+            }
+            // Get points for thumb and index finger.
+            let thumbPoints = try observation.recognizedPoints(.thumb)
+            let indexFingerPoints = try observation.recognizedPoints(.indexFinger)
+            // Look for tip points.
+            guard let thumbTipPoint = thumbPoints[.thumbTip], let indexTipPoint = indexFingerPoints[.indexTip] else {
+                return
+            }
+            // Ignore low confidence points.
+            guard thumbTipPoint.confidence > 0.3 && indexTipPoint.confidence > 0.3 else {
+                return
+            }
+            // Convert points from Vision coordinates to AVFoundation coordinates.
+            thumbTip = CGPoint(x: thumbTipPoint.location.x, y: 1 - thumbTipPoint.location.y)
+            indexTip = CGPoint(x: indexTipPoint.location.x, y: 1 - indexTipPoint.location.y)
+        } catch {
+            cameraController.captureSession?.stopRunning()
+            print("error occured")
+        }
+
+    }
 }
 
 struct CameraFeedView : UIViewControllerRepresentable {
     
     @Binding var cameraIsPlaying: Bool
+    var gestureProcessor: HandGestureProcessor
     
     public typealias UIViewControllerType = CameraViewController
     
     func makeUIViewController(context: Context) -> CameraViewController {
         let cameraVC = CameraViewController()
 //        cameraVC.delegate = context.coordinator
+        cameraVC.gestureProcessor = gestureProcessor
         return cameraVC
     }
     
