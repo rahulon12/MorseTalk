@@ -9,6 +9,7 @@ import SwiftUI
 
 struct CameraModeView: View {
     @Environment(\.dismiss) var dismiss
+    let morseCodeTranslation = MorseCodeTranslation()
     @ObservedObject private var handGestureProcessor = HandGestureModel()
     
     var body: some View {

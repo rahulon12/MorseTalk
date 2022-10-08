@@ -1,6 +1,17 @@
 import Foundation
 import CoreGraphics
 
+class MorseCodeTranslation {
+    enum CodeType {
+        case dot, dash, space
+    }
+    
+    var translatedText = ""
+    var morseCode = [CodeType]() {
+        didSet { print(morseCode) }
+    }
+}
+
 class HandGestureModel: ObservableObject {
     // Distance
     // The current state of the hand
@@ -8,15 +19,26 @@ class HandGestureModel: ObservableObject {
     typealias PointsPair = (thumbTip: CGPoint, indexTip: CGPoint)
     let pinchThreshold: CGFloat
     let countThreshold = 3
+    var tempPose: MorseCodeTranslation.CodeType?
     
     enum HandState: String, CaseIterable {
         case pinched, apart, inProgress, unknown
     }
     
-    @Published var timePinchedCount = 0.0
+    @Published var timePinchedCount = 0.0 {
+        didSet {
+            if timePinchedCount > 3 {
+                tempPose = .dash
+            } else if timePinchedCount > 1 {
+                tempPose = .dot
+            }
+        }
+    }
     var timePinchedTimer: Timer?
     var isPinchedCount = 0
     var isApartCount = 0
+    var morseTranslation: MorseCodeTranslation = MorseCodeTranslation()
+    
     @Published var currentState: HandState = .unknown {
         willSet {
             if (currentState != .pinched && newValue == .pinched) {
@@ -43,7 +65,11 @@ class HandGestureModel: ObservableObject {
             // timePinchedTimer = 0
             currentState = (isApartCount > countThreshold) ? .apart : .inProgress
             timePinchedTimer?.invalidate()
+            if let tempPose = tempPose {
+                morseTranslation.morseCode.append(tempPose)
+            }
             timePinchedCount = 0
+            tempPose = nil
         }
     }
 }
