@@ -25,7 +25,7 @@ final class CameraViewController: UIViewController, AVCaptureVideoDataOutputSamp
         return handPoseRequest
     }()
     
-    var gestureProcessor: HandGestureProcessor?
+    var gestureProcessor: HandGestureModel?
                 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -125,7 +125,7 @@ final class CameraViewController: UIViewController, AVCaptureVideoDataOutputSamp
         let indexPointConverted = self.cameraController.previewLayer!.layerPointConverted(fromCaptureDevicePoint: indexPoint)
         
         // Process new points
-        gestureProcessor?.processPointsPair((thumbPointConverted, indexPointConverted))
+        gestureProcessor?.processPointsPair(pointsPair: (thumbPointConverted, indexPointConverted))
     }
     
     
@@ -173,7 +173,7 @@ final class CameraViewController: UIViewController, AVCaptureVideoDataOutputSamp
 struct CameraFeedView : UIViewControllerRepresentable {
     
     @Binding var cameraIsPlaying: Bool
-    var gestureProcessor: HandGestureProcessor
+    var gestureProcessor: HandGestureModel
     
     public typealias UIViewControllerType = CameraViewController
     

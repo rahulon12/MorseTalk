@@ -1,82 +1,57 @@
-/*
-See LICENSE folder for this sample’s licensing information.
-
-Abstract:
-This class is a state machine that transitions between states based on pair
-    of points stream. These points are the tips for thumb and index finger.
-    If the tips are closer than the desired distance, the state is "pinched", otherwise it's "apart".
-    There are also "possiblePinch" and "possibeApart" states that are used to smooth out state transitions.
-    During these possible states HandGestureProcessor collects the required amount of evidence before committing to a definite state.
-*/
-
 import Foundation
 import CoreGraphics
 
-class HandGestureProcessor: ObservableObject {
-    enum State: String, CaseIterable {
-        case possiblePinch
-        case pinched
-        case possibleApart
-        case apart
-        case unknown
+class HandGestureModel: ObservableObject {
+    // Distance
+    // The current state of the hand
+    // The time of contact
+    typealias PointsPair = (thumbTip: CGPoint, indexTip: CGPoint)
+    let pinchThreshold: CGFloat
+    let countThreshold = 3
+    
+    enum HandState: String, CaseIterable {
+        case pinched, apart, inProgress, unknown
     }
     
-    typealias PointsPair = (thumbTip: CGPoint, indexTip: CGPoint)
-    
-    @Published private(set) var state = State.unknown {
-        didSet {
-            didChangeStateClosure?(state)
-            print(state)
+    @Published var timePinchedCount = 0.0
+    var timePinchedTimer: Timer?
+    var isPinchedCount = 0
+    var isApartCount = 0
+    @Published var currentState: HandState = .unknown {
+        willSet {
+            if (currentState != .pinched && newValue == .pinched) {
+                timePinchedTimer = .scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
+                    self.timePinchedCount += 1
+                }
+            }
         }
     }
-    private var pinchEvidenceCounter = 0
-    private var apartEvidenceCounter = 0
-    private let pinchMaxDistance: CGFloat
-    private let evidenceCounterStateTrigger: Int
     
-    var didChangeStateClosure: ((State) -> Void)?
-    private (set) var lastProcessedPointsPair = PointsPair(.zero, .zero)
-    
-    init(pinchMaxDistance: CGFloat = 40, evidenceCounterStateTrigger: Int = 3) {
-        self.pinchMaxDistance = pinchMaxDistance
-        self.evidenceCounterStateTrigger = evidenceCounterStateTrigger
+    init(pinchThreshold: CGFloat = 40) {
+        self.pinchThreshold = pinchThreshold
     }
     
-    func reset() {
-        state = .unknown
-        pinchEvidenceCounter = 0
-        apartEvidenceCounter = 0
-    }
-    
-    func processPointsPair(_ pointsPair: PointsPair) {
-        lastProcessedPointsPair = pointsPair
+    func processPointsPair(pointsPair: PointsPair) {
         let distance = pointsPair.indexTip.distance(from: pointsPair.thumbTip)
-        if distance < pinchMaxDistance {
-            // Keep accumulating evidence for pinch state.
-            pinchEvidenceCounter += 1
-            apartEvidenceCounter = 0
-            // Set new state based on evidence amount.
-            state = (pinchEvidenceCounter >= evidenceCounterStateTrigger) ? .pinched : .possiblePinch
+        if distance < pinchThreshold {
+            isPinchedCount += 1
+            isApartCount = 0
+            currentState = (isPinchedCount > countThreshold) ? .pinched : .inProgress
         } else {
-            // Keep accumulating evidence for apart state.
-            apartEvidenceCounter += 1
-            pinchEvidenceCounter = 0
-            // Set new state based on evidence amount.
-            state = (apartEvidenceCounter >= evidenceCounterStateTrigger) ? .apart : .possibleApart
+            isApartCount += 1
+            isPinchedCount = 0
+            // timePinchedTimer = 0
+            currentState = (isApartCount > countThreshold) ? .apart : .inProgress
+            timePinchedTimer?.invalidate()
+            timePinchedCount = 0
         }
     }
 }
-
-// MARK: - CGPoint helpers
 
 extension CGPoint {
-
-    static func midPoint(p1: CGPoint, p2: CGPoint) -> CGPoint {
-        return CGPoint(x: (p1.x + p2.x) / 2, y: (p1.y + p2.y) / 2)
+    
+    func distance(from otherPoint: CGPoint) -> CGFloat {
+        return hypot(self.x - otherPoint.x, self.y - otherPoint.y)
     }
     
-    func distance(from point: CGPoint) -> CGFloat {
-        return hypot(point.x - x, point.y - y)
-    }
 }
-

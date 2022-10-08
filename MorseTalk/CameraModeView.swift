@@ -9,12 +9,13 @@ import SwiftUI
 
 struct CameraModeView: View {
     @Environment(\.dismiss) var dismiss
-    @ObservedObject private var handGestureProcessor = HandGestureProcessor()
+    @ObservedObject private var handGestureProcessor = HandGestureModel()
     
     var body: some View {
         NavigationView {
             VStack {
-                Text("\(handGestureProcessor.state.rawValue)")
+                Text("\(handGestureProcessor.currentState.rawValue)")
+                Text("pinching for \(handGestureProcessor.timePinchedCount)")
                 ZStack {
                     CameraFeedView(cameraIsPlaying: .constant(true), gestureProcessor: handGestureProcessor)
                         .background(Color.gray)
