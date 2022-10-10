@@ -106,7 +106,7 @@ final class CameraViewController: UIViewController, AVCaptureVideoDataOutputSamp
         UIApplication.shared.isIdleTimerDisabled = true
         
         if AVCaptureDevice.authorizationStatus(for: .video) == .denied {
-            let alert = UIAlertController(title: "Grant Access", message: "Enable AirChime to access your device's camera in the Settings app.", preferredStyle: .alert)
+            let alert = UIAlertController(title: "Grant Access", message: "Enable MorseTalk to access your device's camera in the Settings app.", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Dismiss", style: .default))
             self.present(alert, animated: true)
         }
@@ -133,6 +133,12 @@ final class CameraViewController: UIViewController, AVCaptureVideoDataOutputSamp
         var thumbTip: CGPoint?
         var indexTip: CGPoint?
         
+        frameCounter += 1
+        if frameCounter != 5 {
+            return
+        }
+        frameCounter = 0
+        
         defer {
             DispatchQueue.main.sync {
                 self.processPoints(thumbTip: thumbTip, indexTip: indexTip)
@@ -146,6 +152,15 @@ final class CameraViewController: UIViewController, AVCaptureVideoDataOutputSamp
             // Continue only when a hand was detected in the frame.
             // Since we set the maximumHandCount property of the request to 1, there will be at most one observation.
             guard let observation = handPoseRequest.results?.first else {
+                if let gestureProcessor = gestureProcessor {
+                    if !gestureProcessor.morseTranslation.morseCode.isEmpty && gestureProcessor.morseTranslation.morseCode.last?.codeType != .charSpace && gestureProcessor.morseTranslation.morseCode.last?.codeType != .wordSpace {
+                        self.gestureProcessor?.morseTranslation.morseCode.append(MorseCode(.charSpace))
+                    }
+                    DispatchQueue.main.async {
+                        gestureProcessor.reset()
+                        gestureProcessor.morseTranslation.processTranslation()
+                    }
+                }
                 return
             }
             // Get points for thumb and index finger.

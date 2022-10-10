@@ -21,6 +21,7 @@
 		B71C10EB28D7DD44004F3AFC /* ButtonModeDriver.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71C10EA28D7DD44004F3AFC /* ButtonModeDriver.swift */; };
 		B71C10ED28D7E55E004F3AFC /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71C10EC28D7E55E004F3AFC /* CameraViewController.swift */; };
 		B71C10F128D7E5D9004F3AFC /* CameraController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71C10F028D7E5D9004F3AFC /* CameraController.swift */; };
+		B720644E28F24BC2002D9BF2 /* MorseCodeTranslation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B720644D28F24BC1002D9BF2 /* MorseCodeTranslation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +40,7 @@
 		B71C10EA28D7DD44004F3AFC /* ButtonModeDriver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonModeDriver.swift; sourceTree = "<group>"; };
 		B71C10EC28D7E55E004F3AFC /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		B71C10F028D7E5D9004F3AFC /* CameraController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraController.swift; sourceTree = "<group>"; };
+		B720644D28F24BC1002D9BF2 /* MorseCodeTranslation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MorseCodeTranslation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,6 +80,7 @@
 				B71C10E428CD5EAC004F3AFC /* ButtonModeView.swift */,
 				B71C10E828CD62AE004F3AFC /* CameraModeView.swift */,
 				B70E643D28EA5335001245CF /* HandGestureProcessor.swift */,
+				B720644D28F24BC1002D9BF2 /* MorseCodeTranslation.swift */,
 				B71C10EC28D7E55E004F3AFC /* CameraViewController.swift */,
 				B71C10F028D7E5D9004F3AFC /* CameraController.swift */,
 				B71C10EA28D7DD44004F3AFC /* ButtonModeDriver.swift */,
@@ -173,6 +176,7 @@
 				B71C10E528CD5EAC004F3AFC /* ButtonModeView.swift in Sources */,
 				B71C10EB28D7DD44004F3AFC /* ButtonModeDriver.swift in Sources */,
 				B71C10D928CD5712004F3AFC /* Persistence.swift in Sources */,
+				B720644E28F24BC2002D9BF2 /* MorseCodeTranslation.swift in Sources */,
 				B71C10F128D7E5D9004F3AFC /* CameraController.swift in Sources */,
 				B70E643E28EA5335001245CF /* HandGestureProcessor.swift in Sources */,
 				B71C10D228CD5710004F3AFC /* ContentView.swift in Sources */,

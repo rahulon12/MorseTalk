@@ -9,7 +9,7 @@ import SwiftUI
 
 struct AppConstants {
     static let defaultCornerRadius: CGFloat = 16.0
-    var translationAlphabets = [".-": "A",
+    static let translationAlphabets = [".-": "A",
                            "-...": "B",
                            "-.-.": "C",
                            "-..": "D",
@@ -35,7 +35,7 @@ struct AppConstants {
                            "-..-": "X",
                            "-.--": "Y",
                            " --..": "Z"]
-    var translationNumbers = ["-----": 0,
+    static let translationNumbers = ["-----": 0,
                               ".----": 1,
                               "..---": 2,
                               "...--": 3,

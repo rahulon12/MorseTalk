@@ -1,17 +1,6 @@
 import Foundation
 import CoreGraphics
 
-class MorseCodeTranslation {
-    enum CodeType {
-        case dot, dash, space
-    }
-    
-    var translatedText = ""
-    var morseCode = [CodeType]() {
-        didSet { print(morseCode) }
-    }
-}
-
 class HandGestureModel: ObservableObject {
     // Distance
     // The current state of the hand
@@ -19,7 +8,7 @@ class HandGestureModel: ObservableObject {
     typealias PointsPair = (thumbTip: CGPoint, indexTip: CGPoint)
     let pinchThreshold: CGFloat
     let countThreshold = 3
-    var tempPose: MorseCodeTranslation.CodeType?
+    var tempPose: MorseCode.CodeType?
     
     enum HandState: String, CaseIterable {
         case pinched, apart, inProgress, unknown
@@ -29,7 +18,7 @@ class HandGestureModel: ObservableObject {
         didSet {
             if timePinchedCount > 3 {
                 tempPose = .dash
-            } else if timePinchedCount > 1 {
+            } else if timePinchedCount >= 1 {
                 tempPose = .dot
             }
         }
@@ -37,7 +26,7 @@ class HandGestureModel: ObservableObject {
     var timePinchedTimer: Timer?
     var isPinchedCount = 0
     var isApartCount = 0
-    var morseTranslation: MorseCodeTranslation = MorseCodeTranslation()
+    @Published var morseTranslation: MorseCodeTranslation = MorseCodeTranslation()
     
     @Published var currentState: HandState = .unknown {
         willSet {
@@ -66,16 +55,30 @@ class HandGestureModel: ObservableObject {
             currentState = (isApartCount > countThreshold) ? .apart : .inProgress
             timePinchedTimer?.invalidate()
             if let tempPose = tempPose {
-                morseTranslation.morseCode.append(tempPose)
+                morseTranslation.morseCode.append(MorseCode(tempPose))
             }
             timePinchedCount = 0
             tempPose = nil
         }
     }
+    
+    func reset() {
+        tempPose = nil
+        timePinchedCount = 0
+        timePinchedTimer?.invalidate()
+        isApartCount = 0
+        isPinchedCount = 0
+        currentState = .unknown
+    }
+    
+    func nextWord() {
+        if morseTranslation.morseCode.last?.codeType != .wordSpace {
+            morseTranslation.morseCode.append(MorseCode(.wordSpace))
+        }
+    }
 }
 
 extension CGPoint {
-    
     func distance(from otherPoint: CGPoint) -> CGFloat {
         return hypot(self.x - otherPoint.x, self.y - otherPoint.y)
     }
